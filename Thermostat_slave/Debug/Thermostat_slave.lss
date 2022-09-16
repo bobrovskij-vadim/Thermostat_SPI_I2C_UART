@@ -1,0 +1,309 @@
+
+Thermostat_slave.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         0000015e  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000020  00800060  0000015e  000001d2  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000001f2  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  00000224  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000090  00000000  00000000  00000260  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   00000904  00000000  00000000  000002f0  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 000006ca  00000000  00000000  00000bf4  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000405  00000000  00000000  000012be  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000124  00000000  00000000  000016c4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000398  00000000  00000000  000017e8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    0000029e  00000000  00000000  00001b80  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000060  00000000  00000000  00001e1e  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	12 c0       	rjmp	.+36     	; 0x26 <__ctors_end>
+   2:	24 c0       	rjmp	.+72     	; 0x4c <__bad_interrupt>
+   4:	23 c0       	rjmp	.+70     	; 0x4c <__bad_interrupt>
+   6:	22 c0       	rjmp	.+68     	; 0x4c <__bad_interrupt>
+   8:	21 c0       	rjmp	.+66     	; 0x4c <__bad_interrupt>
+   a:	20 c0       	rjmp	.+64     	; 0x4c <__bad_interrupt>
+   c:	1f c0       	rjmp	.+62     	; 0x4c <__bad_interrupt>
+   e:	1e c0       	rjmp	.+60     	; 0x4c <__bad_interrupt>
+  10:	1d c0       	rjmp	.+58     	; 0x4c <__bad_interrupt>
+  12:	1c c0       	rjmp	.+56     	; 0x4c <__bad_interrupt>
+  14:	1b c0       	rjmp	.+54     	; 0x4c <__bad_interrupt>
+  16:	1a c0       	rjmp	.+52     	; 0x4c <__bad_interrupt>
+  18:	19 c0       	rjmp	.+50     	; 0x4c <__bad_interrupt>
+  1a:	18 c0       	rjmp	.+48     	; 0x4c <__bad_interrupt>
+  1c:	17 c0       	rjmp	.+46     	; 0x4c <__bad_interrupt>
+  1e:	16 c0       	rjmp	.+44     	; 0x4c <__bad_interrupt>
+  20:	15 c0       	rjmp	.+42     	; 0x4c <__bad_interrupt>
+  22:	14 c0       	rjmp	.+40     	; 0x4c <__bad_interrupt>
+  24:	13 c0       	rjmp	.+38     	; 0x4c <__bad_interrupt>
+
+00000026 <__ctors_end>:
+  26:	11 24       	eor	r1, r1
+  28:	1f be       	out	0x3f, r1	; 63
+  2a:	cf e5       	ldi	r28, 0x5F	; 95
+  2c:	d4 e0       	ldi	r29, 0x04	; 4
+  2e:	de bf       	out	0x3e, r29	; 62
+  30:	cd bf       	out	0x3d, r28	; 61
+
+00000032 <__do_copy_data>:
+  32:	10 e0       	ldi	r17, 0x00	; 0
+  34:	a0 e6       	ldi	r26, 0x60	; 96
+  36:	b0 e0       	ldi	r27, 0x00	; 0
+  38:	ee e5       	ldi	r30, 0x5E	; 94
+  3a:	f1 e0       	ldi	r31, 0x01	; 1
+  3c:	02 c0       	rjmp	.+4      	; 0x42 <__SREG__+0x3>
+  3e:	05 90       	lpm	r0, Z+
+  40:	0d 92       	st	X+, r0
+  42:	a0 38       	cpi	r26, 0x80	; 128
+  44:	b1 07       	cpc	r27, r17
+  46:	d9 f7       	brne	.-10     	; 0x3e <__SP_H__>
+  48:	02 d0       	rcall	.+4      	; 0x4e <main>
+  4a:	87 c0       	rjmp	.+270    	; 0x15a <_exit>
+
+0000004c <__bad_interrupt>:
+  4c:	d9 cf       	rjmp	.-78     	; 0x0 <__vectors>
+
+0000004e <main>:
+
+#include "main.h"
+
+
+int main(void)
+{	
+  4e:	cf 93       	push	r28
+  50:	df 93       	push	r29
+  52:	cd b7       	in	r28, 0x3d	; 61
+  54:	de b7       	in	r29, 0x3e	; 62
+  56:	28 97       	sbiw	r28, 0x08	; 8
+  58:	0f b6       	in	r0, 0x3f	; 63
+  5a:	f8 94       	cli
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	0f be       	out	0x3f, r0	; 63
+  60:	cd bf       	out	0x3d, r28	; 61
+	UART_settings(12);           // Set the baud rate - 9600 BAUD. fOSC = 1 000 000 Hz. Asynchronous double speed mode (U2X = 1); 
+  62:	8c e0       	ldi	r24, 0x0C	; 12
+  64:	90 e0       	ldi	r25, 0x00	; 0
+  66:	44 d0       	rcall	.+136    	; 0xf0 <UART_settings>
+	
+	SPI_slave_init();            // SPI slave initialization;
+  68:	0d d0       	rcall	.+26     	; 0x84 <SPI_slave_init>
+	char cur_t[5];               // Current temperature; 
+	char cur_h[3];               // Current humidity;
+
+    while (1) 
+    {
+		SPI_get_t_h(cur_t, cur_h);              // Function gets char data, temperature and humidity;
+  6a:	be 01       	movw	r22, r28
+  6c:	6a 5f       	subi	r22, 0xFA	; 250
+  6e:	7f 4f       	sbci	r23, 0xFF	; 255
+  70:	ce 01       	movw	r24, r28
+  72:	01 96       	adiw	r24, 0x01	; 1
+  74:	10 d0       	rcall	.+32     	; 0x96 <SPI_get_t_h>
+		UART_show_temperature(cur_t, cur_h);    // Function displays current temperature and humidity from master MC;    
+  76:	be 01       	movw	r22, r28
+  78:	6a 5f       	subi	r22, 0xFA	; 250
+  7a:	7f 4f       	sbci	r23, 0xFF	; 255
+  7c:	ce 01       	movw	r24, r28
+  7e:	01 96       	adiw	r24, 0x01	; 1
+  80:	51 d0       	rcall	.+162    	; 0x124 <UART_show_temperature>
+  82:	f3 cf       	rjmp	.-26     	; 0x6a <main+0x1c>
+
+00000084 <SPI_slave_init>:
+
+#include "SPI.h"
+
+void SPI_slave_init(void)       // SPI slave initialization function;
+{
+	DDRB = (1<<MISO);           // Set MISO output, all others input;
+  84:	80 e1       	ldi	r24, 0x10	; 16
+  86:	87 bb       	out	0x17, r24	; 23
+	SPCR = (1<<SPE);            // Enable SPI;
+  88:	80 e4       	ldi	r24, 0x40	; 64
+  8a:	8d b9       	out	0x0d, r24	; 13
+  8c:	08 95       	ret
+
+0000008e <SPI_slave_receive>:
+}
+
+char SPI_slave_receive(void)    // SPI slave receive data;
+{
+	while(!(SPSR & (1<<SPIF)))  // Wait for reception complete;
+  8e:	77 9b       	sbis	0x0e, 7	; 14
+  90:	fe cf       	rjmp	.-4      	; 0x8e <SPI_slave_receive>
+	;
+	return SPDR;                // Return data register;
+  92:	8f b1       	in	r24, 0x0f	; 15
+}
+  94:	08 95       	ret
+
+00000096 <SPI_get_t_h>:
+
+void SPI_get_t_h(char *temperature, char *humidity)     // Function gets char data, temperature and humidity;
+{
+  96:	cf 92       	push	r12
+  98:	df 92       	push	r13
+  9a:	ef 92       	push	r14
+  9c:	ff 92       	push	r15
+  9e:	0f 93       	push	r16
+  a0:	1f 93       	push	r17
+  a2:	cf 93       	push	r28
+  a4:	df 93       	push	r29
+  a6:	6c 01       	movw	r12, r24
+  a8:	7b 01       	movw	r14, r22
+	for(int i = 0; i < 5; ++i)
+  aa:	c0 e0       	ldi	r28, 0x00	; 0
+  ac:	d0 e0       	ldi	r29, 0x00	; 0
+  ae:	07 c0       	rjmp	.+14     	; 0xbe <SPI_get_t_h+0x28>
+	{
+		temperature[i] = SPI_slave_receive();
+  b0:	86 01       	movw	r16, r12
+  b2:	0c 0f       	add	r16, r28
+  b4:	1d 1f       	adc	r17, r29
+  b6:	eb df       	rcall	.-42     	; 0x8e <SPI_slave_receive>
+  b8:	f8 01       	movw	r30, r16
+  ba:	80 83       	st	Z, r24
+	return SPDR;                // Return data register;
+}
+
+void SPI_get_t_h(char *temperature, char *humidity)     // Function gets char data, temperature and humidity;
+{
+	for(int i = 0; i < 5; ++i)
+  bc:	21 96       	adiw	r28, 0x01	; 1
+  be:	c5 30       	cpi	r28, 0x05	; 5
+  c0:	d1 05       	cpc	r29, r1
+  c2:	b4 f3       	brlt	.-20     	; 0xb0 <SPI_get_t_h+0x1a>
+  c4:	c0 e0       	ldi	r28, 0x00	; 0
+  c6:	d0 e0       	ldi	r29, 0x00	; 0
+  c8:	07 c0       	rjmp	.+14     	; 0xd8 <SPI_get_t_h+0x42>
+		temperature[i] = SPI_slave_receive();
+	}
+	
+	for(int i = 0; i < 3; ++i)
+	{
+		humidity[i] = SPI_slave_receive();
+  ca:	87 01       	movw	r16, r14
+  cc:	0c 0f       	add	r16, r28
+  ce:	1d 1f       	adc	r17, r29
+  d0:	de df       	rcall	.-68     	; 0x8e <SPI_slave_receive>
+  d2:	f8 01       	movw	r30, r16
+  d4:	80 83       	st	Z, r24
+	for(int i = 0; i < 5; ++i)
+	{
+		temperature[i] = SPI_slave_receive();
+	}
+	
+	for(int i = 0; i < 3; ++i)
+  d6:	21 96       	adiw	r28, 0x01	; 1
+  d8:	c3 30       	cpi	r28, 0x03	; 3
+  da:	d1 05       	cpc	r29, r1
+  dc:	b4 f3       	brlt	.-20     	; 0xca <SPI_get_t_h+0x34>
+	{
+		humidity[i] = SPI_slave_receive();
+	}
+}
+  de:	df 91       	pop	r29
+  e0:	cf 91       	pop	r28
+  e2:	1f 91       	pop	r17
+  e4:	0f 91       	pop	r16
+  e6:	ff 90       	pop	r15
+  e8:	ef 90       	pop	r14
+  ea:	df 90       	pop	r13
+  ec:	cf 90       	pop	r12
+  ee:	08 95       	ret
+
+000000f0 <UART_settings>:
+unsigned char UART_receive(void)                                //Data Receiving function;
+{
+	while ( !(UCSRA & (1<<RXC)) )                               //Wait for data to be received;
+	;
+	return UDR;                                                 //Get and return received data from buffer;
+}
+  f0:	90 bd       	out	0x20, r25	; 32
+  f2:	89 b9       	out	0x09, r24	; 9
+  f4:	8b b1       	in	r24, 0x0b	; 11
+  f6:	82 60       	ori	r24, 0x02	; 2
+  f8:	8b b9       	out	0x0b, r24	; 11
+  fa:	88 e1       	ldi	r24, 0x18	; 24
+  fc:	8a b9       	out	0x0a, r24	; 10
+  fe:	8e e8       	ldi	r24, 0x8E	; 142
+ 100:	80 bd       	out	0x20, r24	; 32
+ 102:	08 95       	ret
+
+00000104 <UART_transmit>:
+ 104:	5d 9b       	sbis	0x0b, 5	; 11
+ 106:	fe cf       	rjmp	.-4      	; 0x104 <UART_transmit>
+ 108:	8c b9       	out	0x0c, r24	; 12
+ 10a:	08 95       	ret
+
+0000010c <UART_print_string>:
+ 10c:	cf 93       	push	r28
+ 10e:	df 93       	push	r29
+ 110:	ec 01       	movw	r28, r24
+ 112:	02 c0       	rjmp	.+4      	; 0x118 <UART_print_string+0xc>
+ 114:	f7 df       	rcall	.-18     	; 0x104 <UART_transmit>
+ 116:	21 96       	adiw	r28, 0x01	; 1
+ 118:	88 81       	ld	r24, Y
+ 11a:	81 11       	cpse	r24, r1
+ 11c:	fb cf       	rjmp	.-10     	; 0x114 <UART_print_string+0x8>
+ 11e:	df 91       	pop	r29
+ 120:	cf 91       	pop	r28
+ 122:	08 95       	ret
+
+00000124 <UART_show_temperature>:
+
+void UART_show_temperature(char *cur_t, char *cur_h)            //Function returns temperature from sensor to UART;
+{
+ 124:	0f 93       	push	r16
+ 126:	1f 93       	push	r17
+ 128:	cf 93       	push	r28
+ 12a:	df 93       	push	r29
+ 12c:	8c 01       	movw	r16, r24
+ 12e:	eb 01       	movw	r28, r22
+	UART_print_string("Temperature: ");
+ 130:	80 e6       	ldi	r24, 0x60	; 96
+ 132:	90 e0       	ldi	r25, 0x00	; 0
+ 134:	eb df       	rcall	.-42     	; 0x10c <UART_print_string>
+	UART_print_string(cur_t);
+ 136:	c8 01       	movw	r24, r16
+ 138:	e9 df       	rcall	.-46     	; 0x10c <UART_print_string>
+	UART_print_string(" C\r");
+ 13a:	8e e6       	ldi	r24, 0x6E	; 110
+ 13c:	90 e0       	ldi	r25, 0x00	; 0
+ 13e:	e6 df       	rcall	.-52     	; 0x10c <UART_print_string>
+	UART_print_string("Humidity: ");
+ 140:	82 e7       	ldi	r24, 0x72	; 114
+ 142:	90 e0       	ldi	r25, 0x00	; 0
+ 144:	e3 df       	rcall	.-58     	; 0x10c <UART_print_string>
+	UART_print_string(cur_h);
+ 146:	ce 01       	movw	r24, r28
+ 148:	e1 df       	rcall	.-62     	; 0x10c <UART_print_string>
+	UART_print_string("%\r");	
+ 14a:	8d e7       	ldi	r24, 0x7D	; 125
+ 14c:	90 e0       	ldi	r25, 0x00	; 0
+ 14e:	de df       	rcall	.-68     	; 0x10c <UART_print_string>
+}
+ 150:	df 91       	pop	r29
+ 152:	cf 91       	pop	r28
+ 154:	1f 91       	pop	r17
+ 156:	0f 91       	pop	r16
+ 158:	08 95       	ret
+
+0000015a <_exit>:
+ 15a:	f8 94       	cli
+
+0000015c <__stop_program>:
+ 15c:	ff cf       	rjmp	.-2      	; 0x15c <__stop_program>
